@@ -16,6 +16,7 @@
     "VIEW_EXPENSE_ROUTER_URL" : "/dashboard/viewExpense/:expenseId",
     "CREATE_GROUP_URL" : "/dashboard/crateGroup",
     "ABOUT_URL" : "/about",
+    "INVITE_URL":"/dashboard/invite",
     "USER_PROFILE_URL" : "/dashboard/userProfile",
     "USER_DELETED_URL" : "/userProfile/confirmDelete",
     "USER_PASS_UPDATE_URL" : "/dashboard/userProfile/updatePassword",

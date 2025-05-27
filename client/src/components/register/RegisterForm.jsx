@@ -21,10 +21,16 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    emailId: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
-    .min(8, 'Password should be 8 characters minimum'),
-    firstName: Yup.string().required('First Name is required')
+    emailId: Yup.string()
+      .email("Email must be a valid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password should be 8 characters minimum"),
+    firstName: Yup.string().required("First Name is required"),
+    number: Yup.string()
+      .required("Phone number is required")
+      .matches(/^\+?[0-9]{7,15}$/, "Enter a valid phone number"),
   });
 
   const formik = useFormik({
@@ -51,44 +57,46 @@ export default function RegisterForm() {
 
   return (
     <>
-    {!smUp &&
-    <Snackbar
-      open={showAlert}
-      autoHideDuration={6000}
-       >
-         <Alert severity="error" sx={{ width: '100%' }}>
-         {alertMessage}
-        </Alert>
-      </Snackbar>
-    }
-        <FormikProvider value={formik}>
+      {!smUp && (
+        <Snackbar open={showAlert} autoHideDuration={6000}>
+          <Alert severity="error" sx={{ width: "100%" }}>
+            {alertMessage}
+          </Alert>
+        </Snackbar>
+      )}
+      <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Stack spacing={3}>
             {smUp && showAlert && (
-              <Alert severity="error" sx={{ width: '100%' }}>
-              {alertMessage}
-             </Alert>
+              <Alert severity="error" sx={{ width: "100%" }}>
+                {alertMessage}
+              </Alert>
             )}
-            <Stack spacing={3} direction="row"
-            alignItems="center" justifyContent="space-between"
+            <Stack
+              spacing={3}
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
             >
-            <TextField
-              name="firstName"
-              fullWidth
-              type="text"
-              label="First Name"
-              {...getFieldProps('firstName')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName} />
+              <TextField
+                name="firstName"
+                fullWidth
+                type="text"
+                label="First Name"
+                {...getFieldProps("firstName")}
+                error={Boolean(touched.firstName && errors.firstName)}
+                helperText={touched.firstName && errors.firstName}
+              />
 
               <TextField
-              name="lastName"
-              fullWidth
-              type="text"
-              label="Last Name"
-              {...getFieldProps('lastName')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName} />
+                name="lastName"
+                fullWidth
+                type="text"
+                label="Last Name"
+                {...getFieldProps("lastName")}
+                error={Boolean(touched.lastName && errors.lastName)}
+                helperText={touched.lastName && errors.lastName}
+              />
             </Stack>
 
             <TextField
@@ -97,32 +105,54 @@ export default function RegisterForm() {
               autoComplete="username"
               type="email"
               label="Email address"
-              {...getFieldProps('emailId')}
+              {...getFieldProps("emailId")}
               error={Boolean(touched.emailId && errors.emailId)}
-              helperText={touched.emailId && errors.emailId} />
+              helperText={touched.emailId && errors.emailId}
+            />
+            <TextField
+              name="number"
+              fullWidth
+              autoComplete="tel" // better autocomplete value for phone numbers
+              type="tel"
+              label="Phone Number"
+              {...getFieldProps("number")}
+              error={Boolean(touched.number && errors.number)}
+              helperText={touched.number && errors.number}
+            />
 
             <TextField
               name="password"
               fullWidth
               autoComplete="current-password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               label="Password"
-              {...getFieldProps('password')}
+              {...getFieldProps("password")}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={handleShowPassword} edge="end">
-                      <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                      <Iconify
+                        icon={
+                          showPassword ? "eva:eye-fill" : "eva:eye-off-fill"
+                        }
+                      />
                     </IconButton>
                   </InputAdornment>
                 ),
               }}
               error={Boolean(touched.password && errors.password)}
-              helperText={touched.password && errors.password} />
+              helperText={touched.password && errors.password}
+            />
 
-          <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-            Register
-          </LoadingButton>
+            <LoadingButton
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+              loading={isSubmitting}
+            >
+              Register
+            </LoadingButton>
           </Stack>
 
           {/* <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
@@ -134,9 +164,8 @@ export default function RegisterForm() {
               Forgot password?
             </Link>
           </Stack> */}
-
-          
         </Form>
-      </FormikProvider></>
+      </FormikProvider>
+    </>
   );
 }

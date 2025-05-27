@@ -13,7 +13,7 @@ var gorupRouter = require('./routes/groupRouter')
 var expenseRouter = require('./routes/expenseRouter')
 
 var app = express()
-app.use(cors())
+app.use(cors({ origin: "*" }));
 app.use(express.json())
 app.use(requestLogger)
 
