@@ -12,7 +12,7 @@
   "keywords": [
     "SplitWise"
   ],
-  "author": "Sunny George",
+ 
   "license": "ISC",
   "dependencies": {
     "@mui/x-data-grid": "^5.12.3",
